@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "repository": "https://github.com/hugohe3/ppt-master",
+    "ref": "main",
+    "commit": "7387d7b9d6218ccdaa29d96e2e430a5c5f939959",
+    "version": "6.8.0",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2025-2026 Hugo He"
+  },
+  "vendoredAt": "2026-11-03T14:51:39.816Z",
+  "skillPath": "skills/ppt-master",
+  "fileCount": 13054,
+  "totalBytes": 39994816,
+  "treeDigest": "sha256:64881cc8ad38a31d68a7cdfcb450b4c2f5c8345469d84819be246ea44fa66f17"
+}

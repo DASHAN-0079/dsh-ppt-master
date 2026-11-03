@@ -1,0 +1,9 @@
+# build/install artifacts
+node_modules/
+*.tgz
+pnpm-debug.log*
+
+# local scratch
+.DS_Store
+Thumbs.db
+*.log
