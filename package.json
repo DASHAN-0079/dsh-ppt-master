@@ -1,6 +1,6 @@
 {
   "name": "dsh-ppt-master",
-  "version": "6.8.0-dsh.1",
+  "version": "6.8.0-dsh.2",
   "description": "DeepSeek Harness plugin that ships the PPT Master skill (native-editable PPTX from documents or images) with a cross-platform wrapper CLI.",
   "keywords": [
     "dsh",
@@ -14,9 +14,13 @@
   ],
   "license": "MIT",
   "type": "module",
+  "icon": "./icon.svg",
   "main": "lib/index.js",
   "exports": {
-    ".": "./lib/index.js"
+    ".": "./lib/index.js",
+    "./package.json": "./package.json",
+    "./icon": "./icon.svg",
+    "./locale/*.json": "./locale/*.json"
   },
   "bin": {
     "dsh-ppt-master": "bin/ppt-master.mjs"
@@ -26,6 +30,8 @@
     "bin",
     "scripts",
     "skills",
+    "locale",
+    "icon.svg",
     "cordis.patch.yml",
     "VENDOR.json",
     "README.md",
@@ -51,7 +57,7 @@
   "scripts": {
     "vendor": "node scripts/build-vendor.mjs",
     "check": "node --check lib/index.js && node --check lib/skill.js && node --check lib/host.js && node --check bin/ppt-master.mjs",
-    "test": "node --test test/",
+    "test": "node --test test/plugin.test.mjs",
     "doctor": "node bin/ppt-master.mjs doctor"
   }
 }

@@ -1,5 +1,7 @@
 # dsh-ppt-master
 
+> **English summary** — A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) bundle that ships the [PPT Master](https://github.com/hugohe3/ppt-master) skill (upstream v6.8.0, MIT) byte for byte, registers it with `ctx.skills` as `ppt-master`, and adds a cross-platform CLI (`doctor` / `install-deps` / `run`) that handles Python discovery, UTF-8 stdio, a writable work copy, and an isolated venv. Output decks are natively editable `.pptx`. Install with `dsh plugin --profile web add github:DASHAN-0079/dsh-ppt-master#v6.8.0-dsh.2`, or add the [plugin index](https://raw.githubusercontent.com/DASHAN-0079/dsh-ppt-master/main/market/index.json) in **Plugins → Discover**. The rest of this document is in Chinese.
+
 把 [PPT Master](https://github.com/hugohe3/ppt-master)（上游 v6.8.0，MIT）的整套 skill 原样封装成一个 **DeepSeek Harness 插件（bundle）**：装进任意一台装了 DSH 的机器，`/ppt-master` 就能用，生成的仍然是原生可编辑的 `.pptx`。
 
 上游是一个"由 AI 工具执行的 skill/workflow"，不是 npm 包、不是 DSH 插件，也没有任何 JS 入口。这个包做三件事：
@@ -14,6 +16,9 @@
 dsh-ppt-master/
 ├── package.json           # dsh.bundle.patch → cordis.patch.yml
 ├── cordis.patch.yml       # 插入一行插件：id ppt-master-skill
+├── icon.svg               # Plugins 页图标（package.json 的 "icon"）
+├── locale/                # Plugins 页标题/描述：en 必需，zh/ja/es/fr/de/ru/pt 可选
+├── market/index.json      # 插件市场索引（Discover 的来源 URL）
 ├── lib/
 │   ├── index.js           # Cordis 插件入口（name/inject/apply）
 │   ├── skill.js           # skills provider：list/get、frontmatter 解析
@@ -29,17 +34,15 @@ dsh-ppt-master/
 
 DSH 的 bundle 就是一个 npm 包，安装/卸载/更新都走官方 `dsh plugin`（内部转发 pnpm，并自动维护 profile 的 `dsh.profile.bundles`，不需要手改清单）。
 
-## 安装
-
 ```bash
 # 推荐：从 GitHub tag 装（跨机器通用）
-dsh plugin --profile web add github:DASHAN-0079/dsh-ppt-master#v6.8.0-dsh.1
+dsh plugin --profile web add github:DASHAN-0079/dsh-ppt-master#v6.8.0-dsh.2
 
 # 从本地目录装（开发/调试）
 dsh plugin --profile web add C:\Users\yoyok\dsh-ppt-master
 
 # 从 tarball 装（离线机器）
-dsh plugin --profile web add ./dsh-ppt-master-6.8.0-dsh.1.tgz
+dsh plugin --profile web add ./dsh-ppt-master-6.8.0-dsh.2.tgz
 ```
 
 确认 bundle 层已合成：
@@ -57,6 +60,22 @@ dsh --profile web --dump-config | Select-String ppt-master
 看到这一层就装好了；会话进程下次启动时加载（本包只注册一个 skill provider，不占端口、不改 UI）。装好后技能目录里会出现 `ppt-master`，也可以 `/ppt-master` 直接调用。
 
 > **不需要 `allowBuilds` 授权**：本包是纯 ESM/JS，没有 `prepare` / `postinstall` 脚本，git 安装不会触发安装期代码执行。仍建议 pin tag 或 `#<sha>`，这样上游无法悄悄换掉你安装的内容。
+
+## 从插件市场索引安装
+
+DSH 的插件市场是实验特性（shipped profile 默认关闭）：先在 **Plugins → Experimental plugins → Custom plugin indexes** 打开，Plugins 页就会多出 **Discover** 标签；然后在 Discover 里添加索引来源：
+
+```text
+https://raw.githubusercontent.com/DASHAN-0079/dsh-ppt-master/main/market/index.json
+```
+
+这个索引（`market/index.json`，格式 1）只声明 `dsh-ppt-master` 一个插件，带标题、图标、中英文描述，git 源 pin 到具体 commit；Discover 里点安装等价于：
+
+```bash
+dsh plugin --profile web add git+https://github.com/DASHAN-0079/dsh-ppt-master.git#<index 里的 commit>
+```
+
+以后新版会作为新索引条目出现，装过的机器会显示 "update available"。索引变更历史在仓库的 `market/` 目录里。
 
 ## 更新
 
@@ -101,7 +120,7 @@ warn  external tools  missing: ffmpeg, ffprobe, pandoc, magick, soffice
 插件本身的契约测试：
 
 ```bash
-node --test test/     # payload 摘要、frontmatter、list/get、工作副本闸门、apply() 注册与释放
+node --test test/plugin.test.mjs   # payload 摘要、frontmatter、list/get、工作副本闸门、apply() 注册与释放
 ```
 
 ## 三条命令
@@ -161,3 +180,5 @@ node <pkg>\bin\ppt-master.mjs doctor
 ## 许可
 
 封装层 MIT。`skills/ppt-master/**` 来自 PPT Master，同样 MIT，版权归 Hugo He（见 `skills/ppt-master/LICENSE` 与 `SPONSORS.md`）；本包不做二次分发之外的任何修改，也不代表上游立场。
+
+**可选的 AGPL 依赖已隔离**：上游 `requirements.txt` 列出 `PyMuPDF`（AGPL-3.0），只有 `skills/ppt-master/scripts/source_to_md/pdf_to_md.py`（PDF → Markdown 的可选路由）在函数内懒加载 `import fitz`。本包不打包、不分发 PyMuPDF 及其二进制，安装期也不自动执行任何 pip；`install-deps` 把上游整份清单装进**本机隔离 venv**（`$DSH_HOME/ppt-master/venv`），由使用者自行决定。不用 PDF 路由的用法（文档 / 网页 / 图片转演示文稿）完全不需要 PyMuPDF；对 AGPL 有严格合规要求的团队可以只走这些路由，或在安装后自行从 venv 移除该包。
