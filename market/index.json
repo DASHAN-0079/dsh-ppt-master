@@ -1,0 +1,95 @@
+{
+  "format": 1,
+  "title": {
+    "en": "DASHAN-0079 plugins",
+    "zh": "DASHAN-0079 插件",
+    "ja": "DASHAN-0079 プラグイン",
+    "es": "Complementos de DASHAN-0079",
+    "fr": "Extensions DASHAN-0079",
+    "de": "DASHAN-0079-Plugins",
+    "ru": "Плагины DASHAN-0079",
+    "pt": "Plugins DASHAN-0079"
+  },
+  "description": {
+    "en": "Community plugins for DeepSeek Harness, maintained by DASHAN-0079.",
+    "zh": "由 DASHAN-0079 维护的 DeepSeek Harness 社区插件。",
+    "ja": "DASHAN-0079 が保守する DeepSeek Harness のコミュニティプラグイン。",
+    "es": "Complementos de la comunidad para DeepSeek Harness, mantenidos por DASHAN-0079.",
+    "fr": "Extensions communautaires pour DeepSeek Harness, maintenues par DASHAN-0079.",
+    "de": "Community-Plugins für DeepSeek Harness, gepflegt von DASHAN-0079.",
+    "ru": "Плагины сообщества для DeepSeek Harness, поддерживаемые DASHAN-0079.",
+    "pt": "Plugins da comunidade para o DeepSeek Harness, mantidos por DASHAN-0079."
+  },
+  "metadata": {
+    "categories": {
+      "productivity": {
+        "title": {
+          "en": "Productivity",
+          "zh": "效率工具",
+          "ja": "生産性",
+          "es": "Productividad",
+          "fr": "Productivité",
+          "de": "Produktivität",
+          "ru": "Продуктивность",
+          "pt": "Produtividade"
+        }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-ppt-master",
+      "title": {
+        "en": "PPT Master",
+        "zh": "PPT Master 演示文稿",
+        "ja": "PPT Master",
+        "es": "PPT Master",
+        "fr": "PPT Master",
+        "de": "PPT Master",
+        "ru": "PPT Master",
+        "pt": "PPT Master"
+      },
+      "description": {
+        "en": "Generates complete .pptx presentations: research, outline, design system, rendered pages, and quality review.",
+        "zh": "生成完整 .pptx 演示文稿：调研、大纲、设计系统、页面渲染与质量复核。",
+        "ja": "調査、アウトライン、デザインシステム、ページ描画、品質レビューまでを行う完全な .pptx プレゼンテーションを生成します。",
+        "es": "Genera presentaciones .pptx completas: investigación, esquema, sistema de diseño, páginas renderizadas y revisión de calidad.",
+        "fr": "Génère des présentations .pptx complètes : recherche, plan, système de design, pages rendues et relecture qualité.",
+        "de": "Erzeugt vollständige .pptx-Präsentationen: Recherche, Gliederung, Designsystem, gerenderte Seiten und Qualitätsprüfung.",
+        "ru": "Создаёт полноценные презентации .pptx: исследование, план, дизайн-система, отрисовка страниц и проверка качества.",
+        "pt": "Gera apresentações .pptx completas: pesquisa, estrutura, sistema de design, páginas renderizadas e revisão de qualidade."
+      },
+      "icon": "../icon.svg",
+      "author": "DASHAN-0079",
+      "homepage": "https://github.com/DASHAN-0079/dsh-ppt-master",
+      "repository": {
+        "url": "https://github.com/DASHAN-0079/dsh-ppt-master"
+      },
+      "metadata": {
+        "category": "productivity",
+        "keywords": [
+          "ppt",
+          "pptx",
+          "presentation",
+          "slides",
+          "office",
+          "powerpoint"
+        ]
+      },
+      "versions": [
+        {
+          "version": "6.8.0-dsh.2",
+          "publishTimestamp": 1794878520,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/DASHAN-0079/dsh-ppt-master",
+            "commit": "dee871bbb0a81d60a1b02e45fd67fa9081eccc50"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    }
+  ]
+}
