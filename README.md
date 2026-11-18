@@ -60,6 +60,14 @@ dsh --profile web --dump-config | Select-String ppt-master
 
 > **不需要 `allowBuilds` 授权**：本包是纯 ESM/JS，没有 `prepare` / `postinstall` 脚本，git 安装不会触发安装期代码执行。仍建议 pin tag 或 `#<sha>`，这样上游无法悄悄换掉你安装的内容。
 
+### 预构建 tarball（免克隆）
+
+每个 release 同时上传打包好的 tarball（约 17 MB），不需要克隆 13k 文件的仓库，也不用构建：
+
+```bash
+dsh plugin --profile web add https://github.com/DASHAN-0079/dsh-ppt-master/releases/latest/download/dsh-ppt-master.tgz
+```
+
 ## 从插件市场索引安装
 
 DSH 的插件市场是实验特性（shipped profile 默认关闭）：先在 **Plugins → Experimental plugins → Custom plugin indexes** 打开，Plugins 页就会多出 **Discover** 标签；然后在 Discover 里添加索引来源：
