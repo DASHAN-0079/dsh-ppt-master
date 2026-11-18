@@ -1,6 +1,6 @@
 # dsh-ppt-master
 
-> **English summary** — A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) bundle that ships the [PPT Master](https://github.com/hugohe3/ppt-master) skill (upstream v6.8.0, MIT) byte for byte, registers it with `ctx.skills` as `ppt-master`, and adds a cross-platform CLI (`doctor` / `install-deps` / `run`) that handles Python discovery, UTF-8 stdio, a writable work copy, and an isolated venv. Output decks are natively editable `.pptx`. Install with `dsh plugin --profile web add github:DASHAN-0079/dsh-ppt-master#v6.8.0-dsh.2`, or add the [plugin index](https://raw.githubusercontent.com/DASHAN-0079/dsh-ppt-master/main/market/index.json) in **Plugins → Discover**. The rest of this document is in Chinese.
+> **English summary** — A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) bundle that ships the [PPT Master](https://github.com/hugohe3/ppt-master) skill (upstream v6.8.0, MIT) byte for byte, registers it with `ctx.skills` as `ppt-master`, and adds a cross-platform CLI (`doctor` / `install-deps` / `run`) that handles Python discovery, UTF-8 stdio, a writable work copy, and an isolated venv. Output decks are natively editable `.pptx`. Install with `dsh plugin --profile web add github:DASHAN-0079/dsh-ppt-master#v6.8.0-dsh.2`, or add the [plugin index](https://raw.githubusercontent.com/DASHAN-0079/dsh-plugin-market/main/index.json) (the shared DASHAN-0079 market, which also lists Superagent) in **Plugins → Discover**. The rest of this document is in Chinese.
 
 把 [PPT Master](https://github.com/hugohe3/ppt-master)（上游 v6.8.0，MIT）的整套 skill 原样封装成一个 **DeepSeek Harness 插件（bundle）**：装进任意一台装了 DSH 的机器，`/ppt-master` 就能用，生成的仍然是原生可编辑的 `.pptx`。
 
@@ -18,7 +18,6 @@ dsh-ppt-master/
 ├── cordis.patch.yml       # 插入一行插件：id ppt-master-skill
 ├── icon.svg               # Plugins 页图标（package.json 的 "icon"）
 ├── locale/                # Plugins 页标题/描述：en 必需，zh/ja/es/fr/de/ru/pt 可选
-├── market/index.json      # 插件市场索引（Discover 的来源 URL）
 ├── lib/
 │   ├── index.js           # Cordis 插件入口（name/inject/apply）
 │   ├── skill.js           # skills provider：list/get、frontmatter 解析
@@ -66,16 +65,16 @@ dsh --profile web --dump-config | Select-String ppt-master
 DSH 的插件市场是实验特性（shipped profile 默认关闭）：先在 **Plugins → Experimental plugins → Custom plugin indexes** 打开，Plugins 页就会多出 **Discover** 标签；然后在 Discover 里添加索引来源：
 
 ```text
-https://raw.githubusercontent.com/DASHAN-0079/dsh-ppt-master/main/market/index.json
+https://raw.githubusercontent.com/DASHAN-0079/dsh-plugin-market/main/index.json
 ```
 
-这个索引（`market/index.json`，格式 1）只声明 `dsh-ppt-master` 一个插件，带标题、图标、中英文描述，git 源 pin 到具体 commit；Discover 里点安装等价于：
+这个索引（[DASHAN-0079/dsh-plugin-market](https://github.com/DASHAN-0079/dsh-plugin-market) 的 `index.json`，格式 1）同时收录 `dsh-ppt-master` 与 `dsh-superagent`，每条带标题、图标、中英文描述，git 源 pin 到具体 commit；Discover 里点安装等价于：
 
 ```bash
 dsh plugin --profile web add git+https://github.com/DASHAN-0079/dsh-ppt-master.git#<index 里的 commit>
 ```
 
-以后新版会作为新索引条目出现，装过的机器会显示 "update available"。索引变更历史在仓库的 `market/` 目录里。
+以后新版会作为新索引条目出现，装过的机器会显示 "update available"。索引的变更历史在 `dsh-plugin-market` 仓库里。
 
 ## 更新
 
